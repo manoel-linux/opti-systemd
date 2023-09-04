@@ -1,0 +1,10 @@
+[Unit]
+Description=opti-systemd
+
+[Service]
+Type=oneshot
+ExecStart=/etc/systemd/system/opti-systemd
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

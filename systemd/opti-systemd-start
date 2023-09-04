@@ -1,0 +1,56 @@
+#!/bin/bash
+
+echo "#################################################################"
+if [[ $EUID -ne 0 ]]; then
+echo " ███████ ██████  ██████   ██████  ██████  ██ "
+echo " ██      ██   ██ ██   ██ ██    ██ ██   ██ ██ "
+echo " █████   ██████  ██████  ██    ██ ██████  ██ "
+echo " ██      ██   ██ ██   ██ ██    ██ ██   ██    "
+echo " ███████ ██   ██ ██   ██  ██████  ██   ██ ██ "                                                                                        
+echo "#################################################################"
+echo "(Superuser privileges or sudo required to execute the script)" 
+echo "#################################################################"
+exit 1
+fi
+
+sudo rm -rf /etc/systemd/system.conf 
+
+sudo cp /etc/systemd/system.conf.bak.1 /etc/systemd/system.conf 
+
+sudo rm -rf /etc/systemd/system.conf.bak.1
+
+sudo systemctl daemon-reload
+
+sudo systemctl enable optisystemd.service
+
+sudo systemctl start optisystemd.service
+
+sudo systemctl daemon-reload
+
+sudo systemctl enable optisystemd.service
+
+sudo systemctl start optisystemd.service
+
+clear
+
+echo "#################################################################"
+echo " ██████   ██████  ███    ██ ███████ ██ "
+echo " ██   ██ ██    ██ ████   ██ ██      ██ "
+echo " ██   ██ ██    ██ ██ ██  ██ █████   ██ "
+echo " ██   ██ ██    ██ ██  ██ ██ ██         "
+echo " ██████   ██████  ██   ████ ███████ ██ "                                                                                                                                                                                                                                  
+echo "#################################################################"
+echo "(The opti-systemd was started successfully)"
+echo "#################################################################"  
+read -p "(To apply the changes, you need to restart system) (y/n) >> " confirm
+                
+if [[ "$confirm" == "y" || "$confirm" == "Y" ]]; then
+echo "#################################################################"
+echo "(Restarting the system)"    
+echo "#################################################################"
+sudo reboot
+else
+echo "#################################################################"
+echo "(Restart canceled)"
+echo "#################################################################"
+fi
